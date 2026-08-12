@@ -3,8 +3,10 @@ data "aws_kms_key" "this" {
 }
 
 resource "aws_cloudwatch_log_group" "this" {
+  # checkov:skip=CKV_AWS_338:Retention is configurable via log_retention_days; the 30-day default balances cost for operational broker logs (not audit logs). Set 365+ where compliance requires it.
   name              = "/msk/${var.cluster_name}"
   retention_in_days = var.log_retention_days
+  kms_key_id        = var.cloudwatch_logs_kms_key_id
   tags              = var.tags
 }
 

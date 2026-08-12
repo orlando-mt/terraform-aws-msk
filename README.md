@@ -9,7 +9,7 @@ Terraform module to create an Amazon MSK (Managed Streaming for Apache Kafka) pr
 - Client authentication: IAM (default), SASL/SCRAM and/or unauthenticated
 - EBS provisioned throughput support for high-throughput workloads
 - Prometheus open monitoring (JMX and Node exporters) and CloudWatch enhanced monitoring levels
-- Broker logs to CloudWatch (always) plus optional Firehose and S3 destinations
+- Broker logs to CloudWatch (always, with optional KMS encryption of the log group) plus optional Firehose and S3 destinations
 - **Security group derived from the cluster's real configuration**: only the ports for enabled listeners are opened (no plaintext port on TLS-only clusters, no SCRAM/IAM ports when disabled, monitoring ports only with exporters on)
 - Cross-field validations: brokers multiple of subnets, replication factor vs brokers, min ISR vs replication factor, SCRAM requires TLS, throughput ranges, log destination requirements
 
@@ -89,6 +89,7 @@ module "msk" {
 | enable_jmx_exporter | Prometheus JMX exporter | `bool` | `false` | no |
 | enable_node_exporter | Prometheus Node exporter | `bool` | `false` | no |
 | log_retention_days | CloudWatch retention (days) | `number` | `30` | no |
+| cloudwatch_logs_kms_key_id | KMS key for the log group | `string` | `null` | no |
 | firehose_logs_enabled / firehose_delivery_stream | Firehose logs | `bool` / `string` | `false` / `null` | no |
 | s3_logs_enabled / s3_logs_bucket / s3_logs_prefix | S3 logs | `bool` / `string` | `false` / `null` | no |
 | auto_create_topics_enable | Kafka auto.create.topics | `bool` | `true` | no |

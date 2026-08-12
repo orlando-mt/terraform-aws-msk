@@ -157,9 +157,15 @@ variable "enable_node_exporter" {
 # --- Logging ---------------------------------------------------------------
 
 variable "log_retention_days" {
-  description = "CloudWatch broker log retention in days"
+  description = "CloudWatch broker log retention in days (set 365+ where compliance requires it)"
   type        = number
   default     = 30
+}
+
+variable "cloudwatch_logs_kms_key_id" {
+  description = "KMS key ARN to encrypt the CloudWatch log group. The key policy must grant usage to the logs.<region>.amazonaws.com service principal. If null, CloudWatch-managed encryption is used"
+  type        = string
+  default     = null
 }
 
 variable "firehose_logs_enabled" {
