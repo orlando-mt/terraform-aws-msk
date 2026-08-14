@@ -7,13 +7,13 @@ Creates a 3-broker MSK cluster with:
 - Prometheus JMX/Node exporters enabled
 - 6 default partitions, replication factor 3, min ISR 2
 
+Replace the placeholder IDs in [`terraform.tfvars`](./terraform.tfvars) with
+resources from your account before applying.
+
 ## Usage
 
 ```bash
 terraform init
-terraform apply \
-  -var "vpc_id=vpc-xxxx" \
-  -var 'private_subnet_ids=["subnet-a","subnet-b","subnet-c"]' \
-  -var "app_security_group_id=sg-cccc" \
-  -var "kms_key_id=alias/my-msk-key"
+terraform plan
+terraform apply
 ```
